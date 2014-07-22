@@ -12,7 +12,7 @@ Simply:
 
 	pip install easyos
 
-#####Using easyos is easy:
+Using easyos is easy:
 
 To list all the keys, simply import and print `easyos`:
 
