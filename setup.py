@@ -13,7 +13,7 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
-with open('README.md') as f:
+with open('README.rst') as f:
     readme = f.read()
 
 setup(
@@ -25,6 +25,7 @@ setup(
     author_email='code@tristanfisher.com',
     url='http://github.com/tristanfisher/easyos',
     packages=['easyos'],
+    package_data={'': ['LICENSE']},
     license='Apache 2.0',
     keywords = 'os environment operating system',
     classifiers=(
