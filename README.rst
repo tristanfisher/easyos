@@ -1,17 +1,22 @@
-##easyos
---------
+easyos
+======
 
 A convenience-dictionary of common operating-system information needed while writing code.
 
-#####Getting easyos:
+Getting easyos:
+---------------
 
 Simply:
+
+.. code-block:: bash
 
 	pip install easyos
 
 #####Using easyos is easy:
 
 To list all the keys, simply import and print `easyos`:
+
+.. code-block:: python
 
 	$ python
 	>>> from easyos import easyos
@@ -32,23 +37,26 @@ To list all the keys, simply import and print `easyos`:
 	 'tmp_dir': '/var/folders/k6/dzxr5tss2kn_2tbbk_jfk4c40000gn/T',
 	 'type': 'Darwin'}
 	>>>
-	
+
 To use `easyos` in a script, simply call the relevant key:
 
-	if easyos['os'] == 'Darwin' and easyos['python_version'] == '2.7.8': 
+.. code-block:: python
+
+	if easyos['os'] == 'Darwin' and easyos['python_version'] == '2.7.8':
     	print "You're up to date!"
 
 
 Abstract away the tedious bits of cross-platform coding:
 
+.. code-block:: python
+
 	with open (easyos['tmp_dir']+'/script', 'w') as log:
 	    message = "wow that's easy"
     	log.write(message)
-    	
-    	
 
 
-######New features / Pull requests:
+New features / Pull requests:
+-----------------------------
 
 Make a pull request with your change or addition and I'll merge it if nudges the module in the right direction.
 
