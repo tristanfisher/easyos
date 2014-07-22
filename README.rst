@@ -10,7 +10,7 @@ Simply:
 
 .. code-block:: bash
 
-	pip install easyos
+    pip install easyos
 
 Using easyos is easy:
 
@@ -42,17 +42,17 @@ To use `easyos` in a script, simply call the relevant key:
 
 .. code-block:: python
 
-	if easyos['os'] == 'Darwin' and easyos['python_version'] == '2.7.8':
-    	print "You're up to date!"
+    if easyos['os'] == 'Darwin' and easyos['python_version'] == '2.7.8':
+        print "You're up to date!"
 
 
 Abstract away the tedious bits of cross-platform coding:
 
 .. code-block:: python
 
-	with open (easyos['tmp_dir']+'/script', 'w') as log:
-	    message = "wow that's easy"
-    	log.write(message)
+    with open (easyos['tmp_dir']+'/script', 'w') as log:
+        message = "wow that's easy"
+        log.write(message)
 
 
 New features / Pull requests:
