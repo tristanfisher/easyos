@@ -29,7 +29,6 @@ setup(
     license='Apache 2.0',
     keywords = 'os environment operating system',
     classifiers=(
-        'Development Status :: 4 - Beta',
         'Environment :: MacOS X',
         'Environment :: Win32 (MS Windows)',
         'Intended Audience :: Developers',
