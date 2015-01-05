@@ -42,7 +42,7 @@ def env():
             p['os'] = platform.system_alias(platform.system(), platform.release(), platform.mac_ver())[0] or None
             p['release'] = platform.mac_ver()[0] or None
         except (NameError, IOError) as e:
-            raise Exception('Fatal error retrieving OS details on OSX.\n' + please_help_message)
+            raise Exception('Fatal error retrieving OS details on OSX.')
 
     elif platform.system() == 'Linux':
         try:
@@ -50,7 +50,7 @@ def env():
             p['os'] = platform.linux_distribution()[0] or None
             p['release'] = platform.linux_distribution()[1] or None
         except:
-            raise Exception('Fatal error retrieving OS details on Linux.\n' + please_help_message)
+            raise Exception('Fatal error retrieving OS details on Linux.')
 
     elif platform.system() == 'Windows':
         try:
@@ -58,7 +58,7 @@ def env():
             p['os'] = str(platform.system() + platform.release()) or None
             p['release'] = platform.win32_ver()[0] or None
         except (NameError, IOError) as e:
-            raise Exception('Fatal error retrieving OS details on Windows.\n' + please_help_message)
+            raise Exception('Fatal error retrieving OS details on Windows.')
 
     else:
         # unknown OS. likely odd/new variant of linux/unix or windows
@@ -73,4 +73,4 @@ def env():
     return p
 
 if __name__ == '__main__':
-    print(user_env())
+    print(env())
