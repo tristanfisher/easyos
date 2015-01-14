@@ -1,8 +1,13 @@
-import grp
+try:
+    # Unix only modules
+    import grp
+    import pwd
+except ImportError:
+    pass
 import platform
-import pwd
 import tempfile
 import os
+import getpass
 
 
 def return_error(facility, message=''):
@@ -27,13 +32,19 @@ def env():
     # Might fail on Windows.  Open a PR or issue on github if this is important to you.
     # This should probably get cleaned up by separating the getgrpid from getpwuid, but AFAIK, it's pass/fail
     try:
-        p['current_uid'] = pwd.getpwuid(os.getuid())[2]
-        p['current_gid'] = pwd.getpwuid(os.getuid())[3]
-        p['current_user'] = pwd.getpwuid(os.getuid())[0]
+        pwuid = pwd.getpwuid(os.getuid())
+        p['current_uid'] = pwuid[2]
+        p['current_gid'] = pwuid[3]
+        p['current_user'] = pwuid[0]
         p['current_user_group'] = grp.getgrgid(pwd.getpwnam(p['current_user']).pw_gid).gr_name
-    except:
-        p['current_uid'] = p['current_gid'] = p['current_user'] = None
-        p['current_user_group'] = grp.getgrgid(pwd.getpwnam(p['current_user']).pw_gid).gr_name = None
+    except NameError:
+        try:
+            p['current_user'] = getpass.getuser()
+        except AttributeError:
+            # User is on some unknown OS 
+            p['current_user'] = None
+        finally:
+            p['current_uid'] = p['current_gid'] = p['current_user_group'] = None
 
     # Start OS-specific calls.
     if platform.system() == 'Darwin':
@@ -41,34 +52,36 @@ def env():
             p['type'] = 'Darwin'
             p['os'] = platform.system_alias(platform.system(), platform.release(), platform.mac_ver())[0] or None
             p['release'] = platform.mac_ver()[0] or None
-        except (NameError, IOError) as e:
-            raise Exception('Fatal error retrieving OS details on OSX.')
+        except Exception as e:
+            raise Exception('Fatal error retrieving OS details on OSX: {}'.format(e))
 
     elif platform.system() == 'Linux':
         try:
+            dist_info = platform.linux_distribution()
             p['type'] = 'Linux'
-            p['os'] = platform.linux_distribution()[0] or None
-            p['release'] = platform.linux_distribution()[1] or None
-        except:
-            raise Exception('Fatal error retrieving OS details on Linux.')
+            p['os'] = dist_info[0] or None
+            p['release'] = dist_info[1] or None
+        except Exception as e:
+            raise Exception('Fatal error retrieving OS details on Linux: {}'.format(e))
 
     elif platform.system() == 'Windows':
         try:
             p['type'] = 'Windows'
             p['os'] = str(platform.system() + platform.release()) or None
             p['release'] = platform.win32_ver()[0] or None
-        except (NameError, IOError) as e:
-            raise Exception('Fatal error retrieving OS details on Windows.')
+        except Exception as e:
+            raise Exception('Fatal error retrieving OS details on Windows: {}'.format(e))
 
     else:
         # unknown OS. likely odd/new variant of linux/unix or windows
         # linx/unix is more important, so we default to that:
         try:
-            p['os'] = platform.linux_distribution()[0] or None
+            dist_info = platform.linux_distribution()
+            p['os'] = dist_info[0] or None
             p['type'] = 'unknown'
-            p['release'] = platform.linux_distribution()[1] or None
-        except (NameError, IOError) as e:
-            raise NotImplementedError('Could not get platform information for unknown OS.')
+            p['release'] = dist_info[1] or None
+        except Exception as e:
+            raise NotImplementedError('Could not get platform information for unknown OS: {}'.format(e))
 
     return p
 
