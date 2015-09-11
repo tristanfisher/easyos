@@ -4,6 +4,7 @@ try:
     import pwd
 except ImportError:
     pass
+import pip
 import platform
 import tempfile
 import os
@@ -25,6 +26,12 @@ def env():
     p = {}
     p['platform'] = platform.platform() or None
     p['python_version'] = platform.python_version() or None
+    try:
+        p['python_major_version'] =  p['python_version'][0]
+    except TypeError:
+        p['python_major_version'] = None
+    p['python_version_feature_branch'] = '.'.join(platform.python_version().split('.')[0:2]) or None
+    p['python_installed_packages'] = ["%s==%s" % (pkg.key, pkg.version) for pkg in pip.get_installed_distributions()]
     p['homedir'] = os.path.join(os.path.expanduser('~'))
     p['current_user_desktop'] = os.path.join(p['homedir'], 'Desktop') or None
     p['tmp_dir'] = tempfile.gettempdir()
@@ -41,7 +48,7 @@ def env():
         try:
             p['current_user'] = getpass.getuser()
         except AttributeError:
-            # User is on some unknown OS 
+            # User is on some unknown OS
             p['current_user'] = None
         finally:
             p['current_uid'] = p['current_gid'] = p['current_user_group'] = None
