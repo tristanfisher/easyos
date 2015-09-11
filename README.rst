@@ -23,19 +23,29 @@ To list all the keys, simply import and print `easyos`:
     $ python
     >>> from pprint import pprint
     >>> from easyos import easyos
-    >>> pprint(easyos)
-    {'current_gid': 20,
-     'current_uid': 501,
-     'current_user': 'tfisher',
-     'current_user_desktop': '/Users/tfisher/Desktop',
-     'current_user_group': 'staff',
-     'homedir': '/Users/tfisher',
-     'os': 'Darwin',
-     'platform': 'Darwin-14.0.0-x86_64-i386-64bit',
-     'python_version': '3.4.2',
-     'release': '10.10.1',
-     'tmp_dir': '/var/folders/k6/dzxr5tss2kn_2tbbk_jfk4c40000gn/T',
-     'type': 'Darwin'}
+	{'current_gid': 20,
+	 'current_uid': 501,
+	 'current_user': 'tfisher',
+	 'current_user_desktop': '/Users/tfisher/Desktop',
+	 'current_user_group': 'staff',
+	 'homedir': '/Users/tfisher',
+	 'os': 'Darwin',
+	 'platform': 'Darwin-14.4.0-x86_64-i386-64bit',
+	 'python_installed_packages': ['easyos==2.2',
+	                               'coverage==3.7.1',
+	                               'cython==0.22.1',
+	                               'nose==1.3.4',
+	                               'pip==7.1.0',
+	                               'setuptools==18.0.1',
+	                               'six==1.8.0',
+	                               'sqlalchemy==0.9.8',
+	                               'wheel==0.24.0',],
+	 'python_version': '3.4.3',
+	 'python_version_feature_branch': '3.4',
+	 'python_version_major': '3',
+	 'release': '10.10.4',
+	 'tmp_dir': '/var/folders/k6/dzxr5tss2kn_2tbbk_jfk4c40000gn/T',
+	 'type': 'Darwin'}
     >>>
 
 To use `easyos` in a script, simply call the relevant key:
